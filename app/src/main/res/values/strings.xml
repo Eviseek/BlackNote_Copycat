@@ -5,4 +5,7 @@
     <string name="newBtnString">New</string>
     <string name="favBtnString">Fav</string>
     <string name="dailyCheckBtnString">Check</string>
+    <string name="actionButtonOptions">Options</string>
+    <string name="actionButtonSort">Sort</string>
+    <string-array name="addDialogItems"><item>Note</item><item>Checklist</item></string-array>
 </resources>

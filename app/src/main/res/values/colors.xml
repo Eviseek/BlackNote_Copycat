@@ -2,5 +2,5 @@
 <resources>
     <color name="mainBlack">#000000</color>
     <color name="mainBackgroundColor">#111111 </color>
-    <color name="mainTextColor">#111111 </color>
+    <color name="mainTextColor">#F44336</color>
 </resources>

@@ -9,4 +9,12 @@
         <item name="colorAccent">@color/mainTextColor</item>
     </style>
 
+    <style name="AlertDialogCustom" parent="Theme.AppCompat.Dialog">
+        <item name="android:textColor">@color/mainTextColor</item>
+        <item name="android:borderlessButtonStyle">@style/Widget.AppCompat.Button.Borderless</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:layout_width">40dp</item>
+        <item name="android:background">@color/mainBackgroundColor</item>
+    </style>
+
 </resources>
