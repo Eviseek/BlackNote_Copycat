@@ -6,6 +6,9 @@ import androidx.appcompat.widget.Toolbar;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -21,12 +24,16 @@ public class MainActivity extends AppCompatActivity {
 
     Dialog addDialog;
 
+    Intent noteActivity, checklistActivity;
+
+    Integer whichBtnClicked;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        addDialog = addDialogClass.onCreateDialog(savedInstanceState, this);
+        addDialog = addDialogClass.onCreateDialog(this);
 
         addBtn = findViewById(R.id.addBtn);
         searchBtn = findViewById(R.id.searchBtn);
@@ -40,5 +47,6 @@ public class MainActivity extends AppCompatActivity {
 
     public void addNew(View view){
         addDialog.show();
+
     }
 }

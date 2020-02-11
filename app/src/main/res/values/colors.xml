@@ -3,4 +3,6 @@
     <color name="mainBlack">#000000</color>
     <color name="mainBackgroundColor">#111111 </color>
     <color name="mainTextColor">#F44336</color>
+    <color name="white">#ffff</color>
+    <color name="transparent">#00FFFFFF</color>
 </resources>
