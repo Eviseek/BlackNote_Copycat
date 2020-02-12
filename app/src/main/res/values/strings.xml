@@ -7,6 +7,8 @@
     <string name="dailyCheckBtnString">Check</string>
     <string name="actionButtonOptions">Options</string>
     <string name="actionButtonSort">Sort</string>
+    <string name="buttonSave">Save</string>
+    <string name="buttonEdit">Edit</string>
     <string-array name="addDialogItems">
         <item>Note</item>
         <item>Checklist</item>
