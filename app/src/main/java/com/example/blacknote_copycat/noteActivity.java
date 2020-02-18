@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.media.Image;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -15,14 +16,17 @@ import android.widget.ImageButton;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.sql.Array;
+import java.sql.Time;
+import java.util.ArrayList;
 
 public class noteActivity extends AppCompatActivity {
 
     Button saveBtn;
     String filename, noteTitleStr, noteStr;
     EditText noteEditText, noteTitleEditText;
-
     float textSize;
+    ArrayList <NoteObject> notes = new ArrayList<NoteObject>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,8 +58,10 @@ public class noteActivity extends AppCompatActivity {
     public void saveNote(View view){
         //save note
         //internal storage
-        noteTitleStr = String.valueOf(noteTitleEditText.getText());
-
+        notes.add(new NoteObject(String.valueOf(noteTitleEditText.getText()), String.valueOf(noteEditText.getText())));
+        //Log.i("Title: ", String.valueOf(note.getNoteTitle()));
+        //Log.i("Text: ", String.valueOf(note.getNote()));
+        onBackPressed();
 
 //        try (FileOutputStream fOut = openFileOutput(filename, Context.MODE_PRIVATE)) {
 //            fOut.write(noteTitleStr.getBytes());
