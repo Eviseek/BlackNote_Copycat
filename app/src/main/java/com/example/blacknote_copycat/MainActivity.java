@@ -14,6 +14,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.provider.ContactsContract;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -24,6 +25,7 @@ import android.widget.Button;
 import android.widget.ImageButton;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -33,12 +35,19 @@ public class MainActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private RecyclerView.Adapter adapter;
     private RecyclerView.LayoutManager layoutManager;
-    ArrayList <NoteObject> notes;
+    noteActivity noteActivity = new noteActivity();
+    List notesList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        try {
+          //  notesList = noteActivity.getSharedPref();
+        } catch (Exception e){
+            Log.i("Error", "not possible");
+        }
 
         addDialog = addDialogClass.onCreateDialog(this);
 

@@ -4,11 +4,6 @@ public class NoteObject {
     private String noteTitle;
     private String note;
 
-    public NoteObject(String noteTitle, String note) {
-        this.noteTitle = noteTitle;
-        this.note = note;
-    }
-
     public String getNoteTitle() {
         return noteTitle;
     }

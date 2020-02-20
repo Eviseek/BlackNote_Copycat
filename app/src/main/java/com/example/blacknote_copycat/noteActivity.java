@@ -2,23 +2,19 @@ package com.example.blacknote_copycat;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Context;
-import android.content.Intent;
-import android.media.Image;
+import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.provider.ContactsContract;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageButton;
 
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.sql.Array;
-import java.sql.Time;
-import java.util.ArrayList;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+import java.lang.reflect.Type;
+import java.util.List;
 
 public class noteActivity extends AppCompatActivity {
 
@@ -26,7 +22,9 @@ public class noteActivity extends AppCompatActivity {
     String filename, noteTitleStr, noteStr;
     EditText noteEditText, noteTitleEditText;
     float textSize;
-    ArrayList <NoteObject> notes = new ArrayList<NoteObject>();
+    NoteObject noteObject = new NoteObject();
+    String json;
+    Gson gson;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,18 +56,40 @@ public class noteActivity extends AppCompatActivity {
     public void saveNote(View view){
         //save note
         //internal storage
-        notes.add(new NoteObject(String.valueOf(noteTitleEditText.getText()), String.valueOf(noteEditText.getText())));
-        //Log.i("Title: ", String.valueOf(note.getNoteTitle()));
-        //Log.i("Text: ", String.valueOf(note.getNote()));
+        noteTitleStr = String.valueOf(noteTitleEditText.getText());
+        noteStr = String.valueOf(noteEditText.getText());
+        noteObject.setNote(noteStr);
+        noteObject.setNoteTitle(noteTitleStr);
+
+        addToSharedPref();
+        getSharedPref();
+
         onBackPressed();
+    }
 
-//        try (FileOutputStream fOut = openFileOutput(filename, Context.MODE_PRIVATE)) {
-//            fOut.write(noteTitleStr.getBytes());
-//            Log.i("Success", "got dat shit into file");
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//            Log.i("Error", "could not write into file");
-//        }
+    public void addToSharedPref(){
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this.getApplicationContext());
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        gson = new Gson();
+        json = gson.toJson(noteObject);
+        editor.putString("NoteObject", json);
+        editor.apply();
 
+       // Type type = new TypeToken<List<NoteObject>>(){}.getType();
+       // List<NoteObject> notesList = gson.fromJson(json, type);
+    }
+
+    public void getSharedPref(){
+//        Type type = new TypeToken<List<NoteObject>>(){}.getType();
+//        List<NoteObject> notesList = gson.fromJson(json, type);
+
+//        return notesList;
+
+        SharedPreferences appSharedPrefs = PreferenceManager.getDefaultSharedPreferences(this.getApplicationContext());
+        Gson gson = new Gson();
+        String json = appSharedPrefs.getString("NoteObject", "");
+        NoteObject noteObject = gson.fromJson(json, NoteObject.class);
+
+        Log.i("My note", noteObject.getNote());
     }
 }
