@@ -1,41 +1,28 @@
 package com.example.blacknote_copycat;
 
-import androidx.annotation.AnimatorRes;
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
-import android.app.AlertDialog;
 import android.app.Dialog;
-import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Adapter;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ImageButton;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-    public addDialogClass addDialogClass = new addDialogClass();
+    public DialogClass DialogClass = new DialogClass();
     ImageButton addBtn, searchBtn, favoritesBtn, checklistBtn, categoryBtn, sortBtn, optionsBtn;
     Dialog addDialog;
     private RecyclerView recyclerView;
     private RecyclerView.Adapter adapter;
     private RecyclerView.LayoutManager layoutManager;
-    noteActivity noteActivity = new noteActivity();
+    NoteActivity noteActivity = new NoteActivity();
     List notesList;
 
     @Override
@@ -49,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
             Log.i("Error", "not possible");
         }
 
-        addDialog = addDialogClass.onCreateDialog(this);
+        addDialog = DialogClass.onCreateDialog(this);
 
         recyclerView = findViewById(R.id.recyclerView);
         addBtn = findViewById(R.id.addBtn);
@@ -70,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
 
-        adapter = new MyAdapter(this, animalNames);
+        adapter = new MainActivityAdapter(this, animalNames);
         recyclerView.setAdapter(adapter);
 
     }
@@ -78,5 +65,15 @@ public class MainActivity extends AppCompatActivity {
     public void addNew(View view){
         addDialog.show();
 
+    }
+
+    public void goToSearchActivity(View view){
+        Intent intent = new Intent(this, SearchActivity.class);
+        startActivity(intent);
+    }
+
+    public void goToFavoritesActivity(View view){
+        Intent intent = new Intent(this, FavoritesActivity.class);
+        startActivity(intent);
     }
 }

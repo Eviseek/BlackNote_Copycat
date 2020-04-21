@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content">
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <CheckBox
+            android:id="@+id/checklistPoint"
+            android:onClick="changeState"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:paddingLeft="5dp"
+            android:text="Dummy text" />
+
+
+        <ImageButton
+            android:id="@+id/renamePointBtn"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_margin="5dp"
+            android:src="@drawable/outline_edit_white_48"
+            android:layout_alignParentRight="true"
+            android:scaleType="fitCenter"/>
+
+        <ImageButton
+            android:id="@+id/deletePointBtn"
+            android:onClick="deleteChecklistPoint"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:scaleType="fitCenter"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="55dp"
+            android:src="@drawable/outline_delete_white_48" />
+
+    </RelativeLayout>
+
+</LinearLayout>
