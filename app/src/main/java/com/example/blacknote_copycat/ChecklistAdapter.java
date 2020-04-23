@@ -7,28 +7,34 @@
 package com.example.blacknote_copycat;
 
 import android.content.Context;
+import android.nfc.Tag;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
+import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ChecklistAdapter extends RecyclerView.Adapter<ChecklistAdapter.ViewHolder> {
+
+    public ChecklistActivity checklistActivity;
 
     private List<String> mData;
     private LayoutInflater mInflater;
     private ChecklistAdapter.ItemClickListener mClickListener;
     // data is passed into the constructor
-    ChecklistAdapter(Context context, List<String> data) {
+    ChecklistAdapter(Context context, ArrayList<String> data) {
         this.mInflater = LayoutInflater.from(context);
         this.mData = data;
     }
-
     // inflates the row layout from xml when needed
     @NonNull
     @Override
@@ -41,7 +47,8 @@ public class ChecklistAdapter extends RecyclerView.Adapter<ChecklistAdapter.View
     @Override
     public void onBindViewHolder(ChecklistAdapter.ViewHolder holder, int position) {
         String checklistPoint = mData.get(position);
-        holder.myTextView.setText(checklistPoint);
+        holder.myPointCheckbox.setText(checklistPoint);
+
     }
 
     // total number of rows
@@ -52,20 +59,47 @@ public class ChecklistAdapter extends RecyclerView.Adapter<ChecklistAdapter.View
 
 
     // stores and recycles views as they are scrolled off screen
-    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        TextView myTextView;
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+        CheckBox myPointCheckbox;
+        ImageButton deletePointBtn;
+        ImageButton renamePointBtn;
 
 
-        ViewHolder(View itemView) {
+
+        ViewHolder(final View itemView) {
             super(itemView);
-            myTextView = itemView.findViewById(R.id.checklistPoint);
-            itemView.setOnClickListener(this);
+
+            myPointCheckbox = itemView.findViewById(R.id.checklistPoint);
+            deletePointBtn = itemView.findViewById(R.id.deletePointBtn);
+            renamePointBtn = itemView.findViewById(R.id.renamePointBtn);
+
+            myPointCheckbox.setTag(1);
+            deletePointBtn.setTag(2);
+            renamePointBtn.setTag(3);
+
+            deletePointBtn.setOnClickListener(this);
+            renamePointBtn.setOnClickListener(this);
+            myPointCheckbox.setOnClickListener(this);
+
         }
 
-        @Override
-        public void onClick(View view) {
-            if (mClickListener != null) mClickListener.onItemClick(view, getAdapterPosition());
-            Toast.makeText(view.getContext(), "", Toast.LENGTH_SHORT).show();
+        public void onClick(View view){
+            int position = getAdapterPosition();
+
+
+            if (view.getTag() == myPointCheckbox.getTag()){
+                Log.i("checkbox clicked", String.valueOf(position));
+
+
+            } else if (view.getTag() == renamePointBtn.getTag()){
+                Log.i("rename clicked", String.valueOf(position));
+
+
+            } else if (view.getTag() == deletePointBtn.getTag()){
+                Log.i("delete clicked", String.valueOf(position));
+                checklistActivity.deleteChecklistPoint(position);
+
+            }
         }
     }
 

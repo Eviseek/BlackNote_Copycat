@@ -2,6 +2,7 @@ package com.example.blacknote_copycat;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -15,7 +16,7 @@ public class ChecklistActivity extends AppCompatActivity {
 
     DialogClass checklistPointDialog = new DialogClass();
     private RecyclerView recyclerView;
-    private RecyclerView.Adapter adapter;
+    private ChecklistAdapter adapter;
     private RecyclerView.ViewHolder viewHolder;
     private RecyclerView.LayoutManager layoutManager;
 
@@ -31,6 +32,7 @@ public class ChecklistActivity extends AppCompatActivity {
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
         adapter = new ChecklistAdapter(this, checklistPoints);
+        adapter.checklistActivity = this;
         recyclerView.setAdapter(adapter);
 
 
@@ -59,5 +61,17 @@ public class ChecklistActivity extends AppCompatActivity {
         int insertIndex = 0;
         checklistPoints.add(insertIndex, point);
         adapter.notifyItemChanged(insertIndex);
+
+        for (int i = 0; i < checklistPoints.size(); i++){
+            Log.i("point", checklistPoints.get(i));
+        }
+    }
+
+    public void deleteChecklistPoint(int position){
+        Log.i("position returned is", String.valueOf(position));
+        checklistPoints.remove(0);
+
+        //adapter.notifyItemChanged(0);
+        adapter.notifyDataSetChanged();
     }
 }
