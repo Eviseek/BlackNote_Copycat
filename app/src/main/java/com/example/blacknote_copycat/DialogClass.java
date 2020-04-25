@@ -5,6 +5,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.text.Editable;
 import android.view.ContextThemeWrapper;
 import android.widget.EditText;
 
@@ -73,5 +74,23 @@ public class DialogClass extends DialogFragment {
 
         checklistDialog.show();
         
+    }
+
+    public void checklistPointRenameDialog(final Context context, final int position){
+        final String point = "Hello";
+        AlertDialog.Builder checklistRenameDialog = new AlertDialog.Builder(context);
+        final EditText pointEditText = new EditText(context);
+        pointEditText.setHint("Rename point");
+        checklistRenameDialog.setView(pointEditText);
+
+        checklistRenameDialog.setPositiveButton("Add", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                checklistActivity.renameChecklistPoint(position, String.valueOf(pointEditText.getText()));
+            }
+        });
+
+        checklistRenameDialog.show();
+
     }
 }

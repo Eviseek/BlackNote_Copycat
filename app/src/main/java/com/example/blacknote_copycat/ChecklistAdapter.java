@@ -7,19 +7,20 @@
 package com.example.blacknote_copycat;
 
 import android.content.Context;
-import android.nfc.Tag;
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.Typeface;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ImageButton;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -89,10 +90,20 @@ public class ChecklistAdapter extends RecyclerView.Adapter<ChecklistAdapter.View
 
             if (view.getTag() == myPointCheckbox.getTag()){
                 Log.i("checkbox clicked", String.valueOf(position));
+                if (myPointCheckbox.isChecked()){
+                    myPointCheckbox.setPaintFlags(myPointCheckbox.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+                    myPointCheckbox.setTextColor(Color.parseColor("#9F9F9F"));
+
+                } else {
+                    myPointCheckbox.setPaintFlags(myPointCheckbox.getPaintFlags() ^ Paint.STRIKE_THRU_TEXT_FLAG);
+                    myPointCheckbox.setTextColor(Color.parseColor("#FFFFFF"));
+                    myPointCheckbox.setTypeface(Typeface.DEFAULT);
+                }
 
 
             } else if (view.getTag() == renamePointBtn.getTag()){
                 Log.i("rename clicked", String.valueOf(position));
+                checklistActivity.getRenamePointPosition(position);
 
 
             } else if (view.getTag() == deletePointBtn.getTag()){

@@ -22,6 +22,8 @@ public class ChecklistActivity extends AppCompatActivity {
 
     ArrayList<String> checklistPoints = new ArrayList<>();
 
+    int insertIndex = 0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,20 +60,40 @@ public class ChecklistActivity extends AppCompatActivity {
     }
 
     public void addChecklistPoint(String point){
-        int insertIndex = 0;
         checklistPoints.add(insertIndex, point);
         adapter.notifyItemChanged(insertIndex);
 
-        for (int i = 0; i < checklistPoints.size(); i++){
-            Log.i("point", checklistPoints.get(i));
-        }
+        insertIndex++;
     }
 
     public void deleteChecklistPoint(int position){
-        Log.i("position returned is", String.valueOf(position));
-        checklistPoints.remove(0);
-
-        //adapter.notifyItemChanged(0);
+        checklistPoints.remove(position);
+        adapter.notifyItemChanged(position);
         adapter.notifyDataSetChanged();
+
+
+        if (insertIndex > 0) {
+            insertIndex--;
+        }
+    }
+
+    public void getRenamePointPosition(int position){
+       // renameChecklistPoint(position);
+       //renameChecklistPoint(newxt);
+       //get string from dat
+
+        //show dialog
+        //get text
+        //pass text and pos
+        //replace
+
+        checklistPointDialog.checklistPointRenameDialog(this, position);
+
+
+    }
+
+    public void renameChecklistPoint(int position, String newTxt){
+       checklistPoints.set(position, newTxt);
+       adapter.notifyItemChanged(position);
     }
 }
