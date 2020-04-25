@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.ImageButton;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -53,8 +54,14 @@ public class MainActivity extends AppCompatActivity {
         animalNames.add("Camel");
         animalNames.add("Sheep");
         animalNames.add("Goat");
+        animalNames.add("Camel");
+        animalNames.add("Sheep");
+        animalNames.add("Goat");
+        animalNames.add("Camel");
+        animalNames.add("Sheep");
+        animalNames.add("Goat");
 
-        layoutManager = new LinearLayoutManager(this);
+        layoutManager = new GridLayoutManager(getApplicationContext(), 2);
         recyclerView.setLayoutManager(layoutManager);
 
         adapter = new MainActivityAdapter(this, animalNames);

@@ -1,10 +1,13 @@
 package com.example.blacknote_copycat;
 
 import android.content.Context;
+import android.media.Image;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
@@ -49,16 +52,38 @@ public class MainActivityAdapter extends RecyclerView.Adapter<MainActivityAdapte
     // stores and recycles views as they are scrolled off screen
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         TextView myTextView;
+        ImageButton favoriteCardBtn;
+        boolean isPressed = false;
 
         ViewHolder(View itemView) {
             super(itemView);
+
+
             myTextView = itemView.findViewById(R.id.tvNoteTitle);
+            favoriteCardBtn = itemView.findViewById(R.id.favoriteCardBtn);
+
+            favoriteCardBtn.setTag(4);
+
+            favoriteCardBtn.setOnClickListener(this);
             itemView.setOnClickListener(this);
         }
 
         @Override
         public void onClick(View view) {
-            if (mClickListener != null) mClickListener.onItemClick(view, getAdapterPosition());
+            if (view.getTag() == favoriteCardBtn.getTag()){
+                int position = getAdapterPosition();
+
+                if (!isPressed){
+                    // pressed state
+                    isPressed = true;
+                    favoriteCardBtn.setImageResource(R.drawable.outline_favorite_white_48);
+
+                } else {
+                    //not pressed state
+                    isPressed = false;
+                    favoriteCardBtn.setImageResource(R.drawable.outline_favorite_border_white_48);
+                }
+            }
         }
     }
 
