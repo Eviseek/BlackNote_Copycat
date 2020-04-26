@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "596367153265",
+    "firebase_url": "https://blacknotecopycat.firebaseio.com",
+    "project_id": "blacknotecopycat",
+    "storage_bucket": "blacknotecopycat.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:596367153265:android:1b967b3654650e268123d0",
+        "android_client_info": {
+          "package_name": "com.example.blacknote_copycat"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "596367153265-2bnvsu3npaecivo8cgpokis4t775bksk.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.blacknote_copycat",
+            "certificate_hash": "bf7b7724211e6091280383a355ddb46e71bad099"
+          }
+        },
+        {
+          "client_id": "596367153265-1c7fcouotolgccssi55tghjb0sampkop.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAw3LFeo3kadJul99gFj21V7VPEXrthBBA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "596367153265-1c7fcouotolgccssi55tghjb0sampkop.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

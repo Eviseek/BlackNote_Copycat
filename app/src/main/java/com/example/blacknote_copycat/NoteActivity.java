@@ -1,13 +1,28 @@
 package com.example.blacknote_copycat;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.blacknote_copycat.ui.login.LoginActivity;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.gson.Gson;
+
+import java.util.ArrayList;
+
+import static java.sql.Types.NULL;
 
 public class NoteActivity extends AppCompatActivity {
 
@@ -15,21 +30,40 @@ public class NoteActivity extends AppCompatActivity {
     String filename, noteTitleStr, noteStr;
     EditText noteEditText, noteTitleEditText;
     float textSize;
-    NoteObject noteObject = new NoteObject();
-    String json;
-    Gson gson;
+    Integer position = 0;
+
+    User user = new User();
+
+    FirebaseInitClass firebaseInitClass = new FirebaseInitClass();
+
+    private FirebaseAuth mAuth;
+    private FirebaseAuth.AuthStateListener mAuthListener;
+
+    String userId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_note);
 
-        filename = "myfile";
-
         saveBtn = findViewById(R.id.saveNoteButton);
         noteEditText = findViewById(R.id.noteEditText);
         noteTitleEditText = findViewById(R.id.noteTitleEditText);
         textSize = noteEditText.getTextSize();
+
+        mAuth = FirebaseAuth.getInstance();
+        mAuthListener = new FirebaseAuth.AuthStateListener() {
+            @Override
+            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
+                if (user != null){
+                    userId = firebaseUser.getUid();
+                    Log.d("user id", userId);
+                } else {
+                    Log.d("firebase", "signed_out");
+                }
+            }
+        };
 
     }
 
@@ -47,42 +81,36 @@ public class NoteActivity extends AppCompatActivity {
     }
 
     public void saveNote(View view){
-        //save note
-        //internal storage
-//        noteTitleStr = String.valueOf(noteTitleEditText.getText());
-//        noteStr = String.valueOf(noteEditText.getText());
-//        noteObject.setNote(noteStr);
-//        noteObject.setNoteTitle(noteTitleStr);
-//
-//        addToSharedPref();
-//        getSharedPref();
+
+        user.setNoteText(String.valueOf(noteEditText.getText()));
+        user.setNoteTitle(String.valueOf(noteTitleEditText.getText()));
+
+        firebaseInitClass.ref.child("users").child(userId).setValue(user.getNoteText());
+        firebaseInitClass.ref.child("users").child(userId).setValue(user.getNoteTitle());
+
+
+        position++;
+
 
         onBackPressed();
     }
 
-//    public void addToSharedPref(){
-//        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this.getApplicationContext());
-//        SharedPreferences.Editor editor = sharedPreferences.edit();
-//        gson = new Gson();
-//        json = gson.toJson(noteObject);
-//        editor.putString("NoteObject", json);
-//        editor.apply();
-//
-//       // Type type = new TypeToken<List<NoteObject>>(){}.getType();
-//       // List<NoteObject> notesList = gson.fromJson(json, type);
-//    }
+    public void loadNotesFromDatabase(){
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("users");
+        reference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot ds: dataSnapshot.getChildren()){
+                    User user = new User();
+                 //   user.setNotes(ds.child(userId).getValue(User.class).getNotes().get(position));
+                }
 
-//    public void getSharedPref(){
-//        Type type = new TypeToken<List<NoteObject>>(){}.getType();
-//        List<NoteObject> notesList = gson.fromJson(json, type);
+            }
 
-//        return notesList;
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
 
-//        SharedPreferences appSharedPrefs = PreferenceManager.getDefaultSharedPreferences(this.getApplicationContext());
-//        Gson gson = new Gson();
-//        String json = appSharedPrefs.getString("NoteObject", "");
-//        NoteObject noteObject = gson.fromJson(json, NoteObject.class);
-//
-//        Log.i("My note", noteObject.getNote());
-//    }
+            }
+        });
+    }
 }
